@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y libgl1-mesa-glx libpci-dev curl nano ps
 
 RUN conda install -y scikit-learn pandas flake8 yapf isort yacs future libgcc
 
-RUN RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglib2.0-0 \
     libsm6 \
