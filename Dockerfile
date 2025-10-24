@@ -23,7 +23,8 @@ RUN apt-get update && apt-get install -y \
 
 # 创建 Python 3.8 环境（基础镜像已经是 Python 3.8+，不需要重新安装）
 # 如果需要特定版本，使用 conda 创建新环境
-
+RUN conda create -n vmunet python=3.8 && \
+    conda activate vmunet
 # 使用 conda 安装包
 RUN conda install -y \
     faiss-gpu \
