@@ -21,9 +21,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN conda create -n vmunet python=3.8 && \
-    conda activate vmunet
-
 RUN pip install packaging && \
     pip install timm==0.4.12 && \
     pip install pytest chardet yacs termcolor && \
