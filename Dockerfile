@@ -1,6 +1,8 @@
-FROM pytorch/pytorch:2.3.1-cuda11.8-cudnn8-devel
+FROM pytorch/pytorch:2.2.0-cuda12.1-cudnn8-devel
 
 RUN apt-get update && apt-get install -y libgl1-mesa-glx libpci-dev curl nano psmisc zip git && apt-get --fix-broken install -y
+
+RUN pip install torchvision torchaudio triton pytest chardet yacs termcolor fvcore seaborn packaging ninja einops numpy==1.24.4 timm==0.4.12
 
 RUN conda install -y scikit-learn pandas flake8 yapf isort yacs future libgcc
 
