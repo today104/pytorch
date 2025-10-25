@@ -51,8 +51,7 @@ RUN pip install \
     ninja PyYAML==6.0.1 requests==2.28.1
 
 # 字体和验证
-RUN mkdir -p /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
-COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/ 2>/dev/null || true
+COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
 
 RUN python -c "import torch; print(f'PyTorch: {torch.__version__}')"
 RUN python -c "import mamba_ssm; print('VMamba ready')"
