@@ -43,8 +43,9 @@ RUN pip install \
     filelock==3.13.1 \
     fsspec==2024.2.0 \
     huggingface-hub==0.23.0 \
-    idna==3.4iopath==0.1.10
-    Jinja2 \
+    idna==3.4iopath==0.1.10 \
+    hydra-core \
+    pytorch_lightning \
     MarkupSafe==2.1.5 \
     mpmath==1.3.0 \
     networkx==3.2.1 \
@@ -67,7 +68,6 @@ RUN pip install \
     triton==2.1.0 \
     typing_extensions==4.9.0 \
     urllib3==1.26.13 \
-    yacs==0.1.8  \
     mmcv==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.1/index.html \
     mmengine==0.10.1 \
     mmdet==3.3.0 mmsegmentation==1.2.2 mmpretrain==1.2.0 
