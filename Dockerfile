@@ -1,9 +1,9 @@
 FROM pytorch/pytorch:1.13.0-cuda11.6-cudnn8-devel
 
-RUN apt-get update && apt-get install -y libgl1-mesa-glx libpci-dev curl nano psmisc zip git && apt-get --fix-broken install -y
+# 设置环境变量
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN conda install -y scikit-learn pandas flake8 yapf isort yacs future libgcc
-
+# 一次性安装所有系统依赖
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     libglib2.0-0 \
@@ -21,16 +21,29 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install packaging && \
-    pip install timm==0.4.12 && \
-    pip install pytest chardet yacs termcolor && \
-    pip install submitit tensorboardX && \
-    pip install triton==2.0.0 && \
-    pip install causal_conv1d==1.0.0  # causal_conv1d-1.0.0+cu118torch1.13cxx11abiFALSE-cp38-cp38-linux_x86_64.whl && \
-    pip install mamba_ssm==1.0.1  # mmamba_ssm-1.0.1+cu118torch1.13cxx11abiFALSE-cp38-cp38-linux_x86_64.whl && \
-    pip install scikit-learn matplotlib thop h5py SimpleITK scikit-image medpy yacs
+# Conda 安装
+RUN conda install -y scikit-learn pandas flake8 yapf isort yacs future libgcc
 
-RUN pip install --upgrade pip && python -m pip install --upgrade setuptools && \
-    pip install opencv-python tb-nightly matplotlib logger_tt tabulate tqdm wheel mccabe scipy
+# 升级 pip
+RUN pip install --upgrade pip setuptools wheel
 
+# 安装 Python 依赖
+RUN pip install \
+    packaging \
+    timm==0.4.12 \
+    pytest chardet termcolor \
+    submitit tensorboardX \
+    triton==2.0.0 \
+    causal_conv1d==1.0.0 \
+    mamba_ssm==1.0.1 \
+    matplotlib thop h5py SimpleITK scikit-image medpy \
+    opencv-python tb-nightly logger_tt tabulate tqdm mccabe scipy
+
+# 准备字体目录
+RUN mkdir -p /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
 COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
+
+# 验证安装
+RUN python -c "import torch, sklearn, matplotlib; print('All core packages installed successfully')"
+
+WORKDIR /workspace
