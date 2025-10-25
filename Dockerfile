@@ -38,8 +38,6 @@ RUN pip install \
 
 # VMamba 核心依赖
 RUN pip install \
-    causal-conv1d \
-    mamba-ssm \
     triton==2.1.0 \
     timm==0.4.12 \
     einops==0.8.0 \
