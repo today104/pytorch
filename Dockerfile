@@ -52,6 +52,5 @@ RUN pip install \
 COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
 
 RUN python -c "import torch; print(f'PyTorch: {torch.__version__}')"
-RUN python -c "import mamba_ssm; print('VMamba ready')"
 
 WORKDIR /workspace
