@@ -49,10 +49,6 @@ RUN pip install \
 RUN pip install \
     tb-nightly logger_tt tabulate fvcore \
     ninja PyYAML==6.0.1 requests==2.28.1
-# 安装 Python 依赖
-RUN pip install causal-conv1d==1.1.1
-    pip install mamba-ssm==1.1.2
-    
 
 # 字体和验证
 RUN mkdir -p /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
