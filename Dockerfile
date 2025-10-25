@@ -22,10 +22,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install packaging && \
-    pip install timm==0.4.12 && \
+    pip install timm && \
     pip install pytest chardet yacs termcolor && \
-    pip install submitit tensorboardX && \
-    pip install triton==2.0.0 
+    pip install tensorboardX && \
+    pip install triton
     
 RUN pip install scikit-learn matplotlib thop h5py SimpleITK
 
