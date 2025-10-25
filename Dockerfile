@@ -26,8 +26,6 @@ RUN pip install packaging && \
     pip install pytest chardet yacs termcolor && \
     pip install submitit tensorboardX && \
     pip install triton==2.0.0 && \
-    pip install causal_conv1d==1.0.0  \
-    pip install mamba_ssm==1.0.1 \
     pip install scikit-learn matplotlib thop h5py SimpleITK scikit-image medpy yacs
 
 RUN pip install --upgrade pip && python -m pip install --upgrade setuptools && \
