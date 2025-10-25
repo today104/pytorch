@@ -23,8 +23,6 @@ RUN apt-get update && apt-get install -y \
 
 # Conda 安装
 RUN conda install -y scikit-learn pandas flake8 yapf isort yacs future libgcc
-RUN conda installcudatoolkit==11.8-c nvidia
-RUN conda install-c"nvidia/label/cuda-11.8.0" cuda-nvcc
     
 
 # 升级 pip
