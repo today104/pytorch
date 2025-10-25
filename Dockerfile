@@ -51,7 +51,6 @@ RUN pip install \
     numpy==1.24.4 \
     pillow==10.2.0 \
     portalocker==2.8.2 \
-    pyparsing @ file:///home/conda/feedstock_root/build_artifacts/pyparsing_1652235407899/work \
     PyYAML==6.0.1 \
     requests==2.28.1 \
     safetensors==0.4.3 \
