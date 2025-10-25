@@ -65,10 +65,7 @@ RUN pip install \
     tqdm==4.66.4 \
     triton==2.1.0 \
     typing_extensions==4.9.0 \
-    urllib3==1.26.13 \
-    mmcv==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.1/index.html \
-    mmengine==0.10.1 \
-    mmdet==3.3.0 mmsegmentation==1.2.2 mmpretrain==1.2.0 
+    urllib3==1.26.13
     
    
 # 准备字体目录
