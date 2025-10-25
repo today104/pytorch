@@ -58,9 +58,6 @@ RUN pip install \
     sympy==1.12tabulate==0.9.0 \
     termcolor==2.4.0 \
     timm==0.4.12 \
-    torch==2.1.1+cu118 \
-    torchaudio==2.1.1+cu118 \
-    torchvision==0.16.1+cu118 \
     tqdm==4.66.4 \
     triton==2.1.0 \
     typing_extensions==4.9.0 \
