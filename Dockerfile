@@ -32,8 +32,8 @@ RUN pip install packaging && \
     # pip install mamba_ssm==1.0.1 \
     pip install scikit-learn matplotlib h5py SimpleITK
     
-RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git"
-RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git"    
+RUN pip install "causal-conv1d@git+https://github.com/Dao-AILab/causal-conv1d.git"
+RUN pip install "mamba-ssm@git+https://github.com/state-spaces/mamba.git"    
 
 # RUN pip install --upgrade pip && python -m pip install --upgrade setuptools && \
  RUN  pip install opencv-python tb-nightly matplotlib logger_tt tabulate tqdm wheel mccabe scipy
