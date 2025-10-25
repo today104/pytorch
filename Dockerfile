@@ -23,6 +23,9 @@ RUN apt-get update && apt-get install -y \
 
 # Conda 安装
 RUN conda install -y scikit-learn pandas flake8 yapf isort yacs future libgcc
+RUN conda installcudatoolkit==11.8-c nvidia
+RUN conda install-c"nvidia/label/cuda-11.8.0" cuda-nvcc
+    
 
 # 升级 pip
 RUN pip install --upgrade pip setuptools wheel
@@ -41,11 +44,11 @@ RUN pip install \
     fsspec==2024.2.0 \
     huggingface-hub==0.23.0 \
     idna==3.4iopath==0.1.10
-    Jinja2==3.1.3 \
+    Jinja2 \
     MarkupSafe==2.1.5 \
     mpmath==1.3.0 \
     networkx==3.2.1 \
-    ninja==1.11.1.1 \
+    ninja \
     numpy==1.24.4 \
     pillow==10.2.0 \
     portalocker==2.8.2 \
@@ -64,7 +67,12 @@ RUN pip install \
     triton==2.1.0 \
     typing_extensions==4.9.0 \
     urllib3==1.26.13 \
-    yacs==0.1.8 
+    yacs==0.1.8  \
+    mmcv==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.1/index.html \
+    mmengine==0.10.1 \
+    mmdet==3.3.0 mmsegmentation==1.2.2 mmpretrain==1.2.0 
+    
+   
 # 准备字体目录
 RUN mkdir -p /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
 COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
