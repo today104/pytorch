@@ -27,10 +27,9 @@ RUN pip install packaging && \
     pip install submitit tensorboardX && \
     pip install triton==2.0.0 
     
-RUN pip install scikit-learn matplotlib thop h5py SimpleITK scikit-image medpy yacs
+RUN pip install scikit-learn matplotlib thop h5py SimpleITK
 
-RUN pip install --upgrade pip && python -m pip install --upgrade setuptools && \
-    pip install opencv-python tb-nightly matplotlib logger_tt tabulate tqdm wheel mccabe scipy
+RUN pip install opencv-python matplotlib tqdm wheel scipy
 
 RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.0.1"
 RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.0.0"
