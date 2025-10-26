@@ -1,20 +1,74 @@
-FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-devel
+FROM pytorch/pytorch:2.5.0-cuda12.1-cudnn9-devel
 
-RUN apt-get update && apt-get install -y libgl1-mesa-glx libpci-dev curl nano psmisc zip git && apt-get --fix-broken install -y
+# 1. 一次性安装所有系统依赖
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libpci-dev \
+    curl \
+    nano \
+    psmisc \
+    zip \
+    git \
+    build-essential \
+    cmake \
+    ninja-build \
+    wget \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip install torch==1.13.0 torchvision==0.14.0 torchaudio==0.13.0 --extra-index-url https://download.pytorch.org/whl/cu117 && \
-    pip install packaging && \
-    pip install timm==0.4.12 && \
-    pip install pytest chardet yacs termcolor && \
-    pip install submitit tensorboardX && \
-    pip install triton==2.0.0 && \
-    pip install causal_conv1d==1.0.0  && \ 
-    pip install mamba_ssm==1.0.1  && \
-    pip install scikit-learn matplotlib thop h5py SimpleITK scikit-image medpy yacs
+# 2. 确保 Python 版本（基础镜像可能已经是 3.10）
+RUN conda install python=3.10 -y
 
-RUN conda install -y faiss-gpu scikit-learn pandas flake8 yapf isort yacs gdown future libgcc -c conda-forge
+# 3. PyTorch 相关（基础镜像已有，这是升级）
+RUN pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 
-RUN pip install --upgrade pip && python -m pip install --upgrade setuptools && \
-    pip install opencv-python tb-nightly matplotlib logger_tt tabulate tqdm wheel mccabe scipy
+# 4. 一次性安装所有 Python 包
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install \
+    scikit-learn \
+    pandas \
+    numpy \
+    scipy \
+    matplotlib \
+    opencv-python \
+    tqdm \
+    scikit-image \
+    thop \
+    h5py \
+    SimpleITK \
+    timm \
+    pytest \
+    chardet \
+    yacs \
+    termcolor \
+    submitit \
+    tensorboardX \
+    medpy \
+    tb-nightly \
+    logger_tt \
+    tabulate \
+    mccabe
+
+# 5. Conda 包（只安装 pip 没有的）
+RUN conda install -y \
+    faiss-gpu \
+    flake8 \
+    yapf \
+    isort \
+    gdown \
+    future \
+    libgcc \
+    -c conda-forge
+
+# 6. 清理缓存
+RUN pip cache purge && \
+    conda clean -a -y
+
+RUN pip install triton==2.2.0
+RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.0.0"
+RUN pip cache purge
+RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.0.1"
 
 COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
+
+
