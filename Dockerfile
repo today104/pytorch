@@ -66,12 +66,12 @@ RUN pip cache purge && \
 
 RUN pip install triton==2.2.0
 
-RUN pip install causal-conv1d>=1.0.0
-RUN pip cache purge
-RUN pip install mamba-ssm>=1.0.1
-
-# RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.0.0"
+# RUN pip install causal-conv1d>=1.0.0
 # RUN pip cache purge
-# RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.0.1"
+# RUN pip install mamba-ssm>=1.0.1
+
+RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.0.0"
+RUN pip cache purge
+RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.0.1"
 
 COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
