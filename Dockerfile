@@ -22,7 +22,7 @@ RUN pip install numpy
 #     && apt-get clean \
 #     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install git wget
+# RUN pip install git wget
 
 RUN pip install packaging && \
     pip install timm && \
