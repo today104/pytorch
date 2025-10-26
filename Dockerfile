@@ -1,56 +1,72 @@
-FROM pytorch/pytorch:2.2.0-cuda11.8-cudnn8-devel
+FROM pytorch/pytorch:2.5.0-cuda12.1-cudnn9-devel
 
-# 设置环境变量
-ENV DEBIAN_FRONTEND=noninteractive
-
-# 一次性安装所有系统依赖
+# 1. 一次性安装所有系统依赖
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
     libpci-dev \
     curl \
     nano \
     psmisc \
     zip \
     git \
-    wget \
     build-essential \
+    cmake \
+    ninja-build \
+    wget \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Conda 安装
-RUN conda install -y scikit-learn pandas flake8 yapf isort yacs future libgcc
+# 2. 确保 Python 版本（基础镜像可能已经是 3.10）
+RUN conda install python=3.10 -y
 
+# 3. PyTorch 相关（基础镜像已有，这是升级）
+RUN pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 
-# 升级 pip
-RUN pip install --upgrade pip setuptools wheel
+# 4. 一次性安装所有 Python 包
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install \
+    scikit-learn \
+    pandas \
+    numpy \
+    scipy \
+    matplotlib \
+    opencv-python \
+    tqdm \
+    scikit-image \
+    thop \
+    h5py \
+    SimpleITK \
+    timm \
+    pytest \
+    chardet \
+    yacs \
+    termcolor \
+    submitit \
+    tensorboardX \
+    medpy \
+    tb-nightly \
+    logger_tt \
+    tabulate \
+    mccabe
 
+# 5. Conda 包（只安装 pip 没有的）
+RUN conda install -y \
+    faiss-gpu \
+    flake8 \
+    yapf \
+    isort \
+    gdown \
+    future \
+    libgcc \
+    -c conda-forge
 
-# 基础依赖
-RUN pip install \
-    packaging pytest chardet termcolor \
-    submitit tensorboardX \
-    matplotlib thop h5py SimpleITK scikit-image medpy \
-    opencv-python scipy mccabe seaborn
+# 6. 清理缓存
+RUN pip cache purge && \
+    conda clean -a -y
 
-# VMamba 核心依赖
-RUN pip install \
-    triton==2.1.0 \
-    timm==0.4.12 \
-    einops==0.8.0 \
-    numpy==1.24.4
+RUN pip install triton==2.2.0
+RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.0.0"
+RUN pip cache purge
+RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.0.1"
 
-# 其他工具
-RUN pip install \
-    tb-nightly logger_tt tabulate fvcore \
-    ninja PyYAML==6.0.1 requests==2.28.1
-
-# 字体和验证
 COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
-
-RUN python -c "import torch; print(f'PyTorch: {torch.__version__}')"
-
-WORKDIR /workspace
