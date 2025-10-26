@@ -22,6 +22,13 @@ RUN pip install numpy
 #     && apt-get clean \
 #     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    cmake \
+    ninja-build \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN conda install git wget -y
 
 RUN pip install packaging && \
@@ -33,6 +40,10 @@ RUN pip install submitit tensorboardX
 RUN pip install scikit-learn matplotlib thop h5py SimpleITK
 
 RUN pip install opencv-python matplotlib tqdm wheel scipy
+
+# RUN pip install triton==2.2.0
+# RUN pip install mamba-ssm>=1.0.1
+# RUN pip install causal-conv1d>=1.0.0
 
 RUN pip install triton==2.2.0
 RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.0.1"
