@@ -55,10 +55,10 @@ RUN pip install opencv-python matplotlib tqdm wheel scipy
 # RUN pip install mamba-ssm>=1.0.1
 # RUN pip install causal-conv1d>=1.0.0
 
-RUN pip install triton==2.1.0
-    pip uninstall numpy -y
-    pip install numpy==1.24.3 -i https://mirrors.aliyun.com/pypi/simple/
-    pip uninstall transformers -y
+RUN pip install triton==2.1.0 && \
+    pip uninstall numpy -y && \
+    pip install numpy==1.24.3 -i https://mirrors.aliyun.com/pypi/simple/ && \
+    pip uninstall transformers -y && \
     pip install transformers==4.36.0 -i https://mirrors.aliyun.com/pypi/simple/
     
 # RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.1.3"
