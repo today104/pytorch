@@ -51,7 +51,7 @@ RUN pip install scikit-learn matplotlib thop h5py SimpleITK
 
 RUN pip install opencv-python matplotlib tqdm wheel scipy
 
-# RUN pip install triton==2.2.0
+# RUN pip install triton==2.1.0
 # RUN pip install mamba-ssm>=1.0.1
 # RUN pip install causal-conv1d>=1.0.0
 
