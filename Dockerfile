@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.5.0-cuda12.1-cudnn9-devel
+FROM pytorch/pytorch:2.1.2-cuda11.8-cudnn8-runtime
 
 # 1. 一次性安装所有系统依赖
 RUN apt-get update && apt-get install -y \
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 RUN conda install python=3.10 -y
 
 # 3. PyTorch 相关（基础镜像已有，这是升级）
-RUN pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+RUN pip install torch==2.1.2+cu118 torchvision==0.16.2+cu118 torchaudio==2.1.2+cu118 -f https://mirrors.aliyun.com/pytorch-wheels/cu118
 
 # 4. 一次性安装所有 Python 包
 RUN pip install --upgrade pip setuptools wheel && \
@@ -65,10 +65,13 @@ RUN pip cache purge && \
     conda clean -a -y
 
 RUN pip install triton==2.2.0
-RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.0.0"
+
+# RUN pip install causal-conv1d>=1.0.0
+# RUN pip cache purge
+# RUN pip install mamba-ssm>=1.0.1
+
+RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.1.3"
 RUN pip cache purge
-RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.0.1"
+RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.1.4"
 
 COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
-
-
