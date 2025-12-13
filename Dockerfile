@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.1.2-cuda11.8-cudnn8-runtime
+FROM pytorch/pytorch:2.1.2-cuda11.8-cudnn8-devel
 RUN conda install python=3.10 -y
 RUN pip install torch==2.1.2+cu118 torchvision==0.16.2+cu118 torchaudio==2.1.2+cu118 -f https://mirrors.aliyun.com/pytorch-wheels/cu118
 RUN pip install scikit-learn pandas
@@ -55,7 +55,12 @@ RUN pip install opencv-python matplotlib tqdm wheel scipy
 # RUN pip install mamba-ssm>=1.0.1
 # RUN pip install causal-conv1d>=1.0.0
 
-RUN pip install triton==2.2.0
+RUN pip install triton==2.1.0
+    pip uninstall numpy -y
+    pip install numpy==1.24.3 -i https://mirrors.aliyun.com/pypi/simple/
+    pip uninstall transformers -y
+    pip install transformers==4.36.0 -i https://mirrors.aliyun.com/pypi/simple/
+    
 # RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.1.3"
 # RUN pip cache purge
 # RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.1.4"
