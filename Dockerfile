@@ -39,7 +39,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
        ninja-build \
     && rm -rf /var/lib/apt/lists/*
 
-RUN conda install git wget -y
+RUN pip install git wget -y
 
 RUN pip install packaging && \
     pip install timm && \
