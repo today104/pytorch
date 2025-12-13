@@ -56,8 +56,17 @@ RUN pip install opencv-python matplotlib tqdm wheel scipy
 # RUN pip install causal-conv1d>=1.0.0
 
 RUN pip install triton==2.2.0
-RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.1.3"
+# RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.1.3"
+# RUN pip cache purge
+# RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.1.4"
+RUN git clone -b v1.1.3 https://github.com/Dao-AILab/causal-conv1d.git /tmp/causal-conv1d && \
+    pip install /tmp/causal-conv1d && \
+    rm -rf /tmp/causal-conv1d
+
 RUN pip cache purge
-RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.1.4"
+
+RUN git clone -b v1.1.4 https://github.com/state-spaces/mamba.git /tmp/mamba-ssm && \
+    pip install /tmp/mamba-ssm && \
+    rm -rf /tmp/mamba-ssm
 
 COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
