@@ -21,11 +21,22 @@ RUN pip install numpy
 #     && apt-get clean \
 #     && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y \
-    git \
-    build-essential \
-    cmake \
-    ninja-build \
+# RUN apt-get update && apt-get install -y \
+#     git \
+#     build-essential \
+#     cmake \
+#     ninja-build \
+#     && rm -rf /var/lib/apt/lists/*
+
+
+RUN export DEBIAN_FRONTEND=noninteractive \
+    && export TZ=Etc/UTC \
+    && apt-get update \
+    && apt-get install -y \
+       git \
+       build-essential \
+       cmake \
+       ninja-build \
     && rm -rf /var/lib/apt/lists/*
 
 RUN conda install git wget -y
