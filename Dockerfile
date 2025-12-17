@@ -6,7 +6,7 @@ RUN pip install numpy==1.24.3
 RUN pip install transformers==4.36.0
 
 
-
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
     git \
