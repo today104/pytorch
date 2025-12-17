@@ -1,45 +1,21 @@
 FROM pytorch/pytorch:2.1.2-cuda11.8-cudnn8-devel
 RUN conda install python=3.10 -y
-RUN pip install torch==2.1.2+cu118 torchvision==0.16.2+cu118 torchaudio==2.1.2+cu118 -f https://mirrors.aliyun.com/pytorch-wheels/cu118
+RUN pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
 RUN pip install scikit-learn pandas
-RUN pip install numpy
-
-# RUN apt-get update && apt-get install -y \
-#     libgl1-mesa-glx \
-#     libglib2.0-0 \
-#     libsm6 \
-#     libxext6 \
-#     libxrender-dev \
-#     libpci-dev \
-#     curl \
-#     nano \
-#     psmisc \
-#     zip \
-#     git \
-#     wget \
-#     build-essential \
-#     && apt-get clean \
-#     && rm -rf /var/lib/apt/lists/*
-
-# RUN apt-get update && apt-get install -y \
-#     git \
-#     build-essential \
-#     cmake \
-#     ninja-build \
-#     && rm -rf /var/lib/apt/lists/*
+RUN pip install numpy==1.24.3
+RUN pip install transformers==4.36.0
 
 
-RUN export DEBIAN_FRONTEND=noninteractive \
-    && export TZ=Etc/UTC \
-    && apt-get update \
-    && apt-get install -y \
-       git \
-       build-essential \
-       cmake \
-       ninja-build \
+
+
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    cmake \
+    ninja-build \
     && rm -rf /var/lib/apt/lists/*
 
-# RUN pip install git wget -y
+RUN conda install git wget -y
 
 RUN pip install packaging && \
     pip install timm && \
@@ -51,27 +27,9 @@ RUN pip install scikit-learn matplotlib thop h5py SimpleITK
 
 RUN pip install opencv-python matplotlib tqdm wheel scipy
 
-# RUN pip install triton==2.1.0
-# RUN pip install mamba-ssm>=1.0.1
-# RUN pip install causal-conv1d>=1.0.0
-
-RUN pip install triton==2.1.0 && \
-    pip uninstall numpy -y && \
-    pip install numpy==1.24.3 -i https://mirrors.aliyun.com/pypi/simple/ && \
-    pip uninstall transformers -y && \
-    pip install transformers==4.36.0 -i https://mirrors.aliyun.com/pypi/simple/
-    
-# RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.1.3"
-# RUN pip cache purge
-# RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.1.4"
-RUN git clone -b v1.1.3 https://github.com/Dao-AILab/causal-conv1d.git /tmp/causal-conv1d && \
-    pip install /tmp/causal-conv1d && \
-    rm -rf /tmp/causal-conv1d
-
+RUN pip install triton==2.1.0
+RUN pip install "causal-conv1d @ git+https://github.com/Dao-AILab/causal-conv1d.git@v1.1.3"
 RUN pip cache purge
-
-RUN git clone -b v1.1.4 https://github.com/state-spaces/mamba.git /tmp/mamba-ssm && \
-    pip install /tmp/mamba-ssm && \
-    rm -rf /tmp/mamba-ssm
+RUN pip install "mamba-ssm @ git+https://github.com/state-spaces/mamba.git@v1.1.4"
 
 COPY ./fonts/* /opt/conda/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/
